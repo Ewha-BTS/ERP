@@ -50,7 +50,8 @@ Ewha visualization Recommendation Program
 
 #### Front-end
 
-
+- React.js
+- SCSS
 
 <br />
 

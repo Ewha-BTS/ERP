@@ -14,7 +14,7 @@ function App() {
         <Route path="/" exact>
           <MainDashboard />
         </Route>
-        <Route path="/define">
+        <Route path="/make">
           <UserDefine />
         </Route>
         <Route path="/recommend">

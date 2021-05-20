@@ -1,11 +1,12 @@
 import React from "react";
+import styled from "styled-components";
+import { withRouter } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faColumns } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faLightbulb } from "@fortawesome/free-regular-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-
-import styled from "styled-components";
 
 const TabBarWrap = styled.div`
   .tabBar {
@@ -26,6 +27,7 @@ const TabBarWrap = styled.div`
         font-size: 1.5rem;
         margin: 1rem;
         color: rgb(63.7%, 67.1%, 74.5%);
+        cursor: pointer;
       }
     }
 
@@ -49,17 +51,36 @@ const TabBarWrap = styled.div`
   }
 `;
 
-const TabBar = ({ data }) => {
+const TabBar = ({ data, history }) => {
   data = true;
 
   return (
     <TabBarWrap>
       <div className="tabBar">
         <div className="tabBar__icon">
-          <FontAwesomeIcon className="tabBar__icon--board" icon={faColumns} />
-          <FontAwesomeIcon className="tabBar__icon--make" icon={faEdit} />
-          <FontAwesomeIcon className="tabBar__icon--rec" icon={faLightbulb} />
-          <FontAwesomeIcon className="tabBar__icon--mypage" icon={faUser} />
+          <FontAwesomeIcon
+            className="tabBar__icon--board"
+            icon={faColumns}
+            onClick={() => history.push("/")}
+          />
+
+          <FontAwesomeIcon
+            className="tabBar__icon--make"
+            icon={faEdit}
+            onClick={() => history.push("/make")}
+          />
+
+          <FontAwesomeIcon
+            className="tabBar__icon--rec"
+            icon={faLightbulb}
+            onClick={() => history.push("/recommend")}
+          />
+
+          <FontAwesomeIcon
+            className="tabBar__icon--mypage"
+            icon={faUser}
+            onClick={() => history.push("/mypage")}
+          />
         </div>
         {data ? (
           <div className="tabBar__button">
@@ -74,4 +95,4 @@ const TabBar = ({ data }) => {
   );
 };
 
-export default TabBar;
+export default withRouter(TabBar);

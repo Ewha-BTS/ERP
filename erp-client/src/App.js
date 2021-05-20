@@ -13,21 +13,18 @@ function App() {
       <Switch>
         <Route path="/" exact>
           <MainDashboard />
-          <TabBar data={false} />
         </Route>
         <Route path="/define">
           <UserDefine />
-          <TabBar data={false} />
         </Route>
         <Route path="/recommend">
           <Recommendation />
-          <TabBar data={false} />
         </Route>
-        <Route path="mypage">
+        <Route path="/mypage">
           <MyPage />
-          <TabBar data={false} />
         </Route>
       </Switch>
+      <TabBar data={false} />
     </Router>
   );
 }

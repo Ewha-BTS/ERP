@@ -85,7 +85,7 @@ const TabBar = ({ data, history }) => {
     formData.append("file", file);
     const data = await postSampleData(formData);
     const generatedData = await loadGeneratedData(data.data);
-    await setLoadData(generatedData);
+    await setLoadData(generatedData.data.vizspec);
   };
 
   useEffect(() => {

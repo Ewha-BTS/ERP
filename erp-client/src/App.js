@@ -10,14 +10,6 @@ import MyPage from "./pages/MyPage";
 import TabBar from "./components/common/TabBar";
 
 function App() {
-  const [recBarData, setRecBarData] = useRecoilState(recommendState);
-
-  // useEffect(() => {
-  //   (() => {
-
-  //   })();
-  // }, [recBarData])
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Router>
@@ -29,7 +21,7 @@ function App() {
             <UserDefine />
           </Route>
           <Route path="/recommend">
-            <Recommendation data={recBarData} />
+            <Recommendation />
           </Route>
           <Route path="/mypage">
             <MyPage />

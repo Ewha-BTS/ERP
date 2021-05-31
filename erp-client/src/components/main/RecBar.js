@@ -1,6 +1,10 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import vegaEmbed from "vega-embed";
+
+import { recommendState } from "../../lib/state";
+import Graph from "../common/Graph";
 
 const RecBarWrap = styled.div`
   .recBar {
@@ -66,13 +70,24 @@ const RecBar = ({ graph }) => {
   // 일단 지금은 recommendation page에 맞게 설정되어 있음
   // graph = true;
 
+  const [loadData, setLoadData] = useRecoilState(recommendState);
+
   const handleClick = (e) => {
     document.querySelector(".selected").classList.remove("selected");
     e.target.classList.add("selected");
   };
 
+  // const encodeData = () => {
+  //   loadData.forEach(async (data, idx) => {
+  //     await vegaEmbed(`.recBar__body--graph${idx}`, data);
+  //   });
+  // };
+
   return (
     <RecBarWrap>
+      <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+      <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
       <div className="recBar">
         <div className="recBar__title">
           {/* useRef, ref 사용해보기 */}
@@ -90,7 +105,12 @@ const RecBar = ({ graph }) => {
             <></>
           )}
         </div>
-        <div className="recBar__body"></div>
+        <div className="recBar__body">
+          {/* {loadData.map(async (data, idx) => {
+            return await (<Graph key={idx} idx={idx} />);
+          })} */}
+          {loadData.forEach((data) => vegaEmbed(`.recBar__body`, data))}
+        </div>
       </div>
     </RecBarWrap>
   );

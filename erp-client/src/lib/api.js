@@ -1,18 +1,12 @@
 import axios from "axios";
 
-// const server = axios.create({
-//   baseURL: "http://203.255.176.80:5016",
-//   timeout: 1000
-// });
-
 const server = axios.create({
-  baseURL: "http://203.255.176.80:5018/",
-  timeout: 1000
+  baseURL: "http://203.255.176.80:5018/"
+  // timeout: 1000
 });
 
 export const postSampleData = async (formData) => {
   try {
-    console.log("data", formData);
     const data = await server.post("/upload", formData, {
       headers: {
         "Content-Type": "multipart/form-data"
@@ -30,11 +24,11 @@ export const postSampleData = async (formData) => {
 export const loadGeneratedData = async (id) => {
   try {
     const data = await server.get(`/inference/${id}`);
-    console.log(data);
-    console.log("[SUCCESS] GET near card data");
+    console.log("[SUCCESS] GET generated data");
     return data;
   } catch (e) {
-    console.log("[FAIL] GET load sample data");
+    console.log("[FAIL] GET generated data", e);
+    alert("파일 로딩에 실패하였습니다.");
     return null;
   }
 };

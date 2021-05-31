@@ -83,8 +83,8 @@ const TabBar = ({ data, history }) => {
     const file = e.target.files[0];
     let formData = new FormData();
     formData.append("file", file);
-    // const id = await postSampleData(formData);
-    const generatedData = await loadGeneratedData("60b49e10e1d8f53c72ffdfeb");
+    const data = await postSampleData(formData);
+    const generatedData = await loadGeneratedData(data.data);
     await setLoadData(generatedData);
   };
 
@@ -129,12 +129,7 @@ const TabBar = ({ data, history }) => {
           <form className="tabBar__button--load">
             <label>
               load
-              <input
-                type="file"
-                name="file"
-                value={loadData}
-                onChange={handleChange}
-              />
+              <input type="file" name="file" onChange={handleChange} />
             </label>
           </form>
         </div>

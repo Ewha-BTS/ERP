@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import Graph from "../components/main/Graph";
 import RecBar from "../components/main/RecBar";
 
-const Recommendation = () => {
-  const [graph, setGraph] = useState(null);
+const Recommendation = ({ data }) => {
+  console.log(data);
 
   return (
     <>
       <Graph />
-      <RecBar graph={graph} />
+      <RecBar graph={data} />
     </>
   );
 };

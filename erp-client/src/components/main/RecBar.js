@@ -64,7 +64,7 @@ const RecBarWrap = styled.div`
 const RecBar = ({ graph }) => {
   // 각 페이지에 맞게 sidebar의 내용 바꾸기
   // 일단 지금은 recommendation page에 맞게 설정되어 있음
-  graph = true;
+  // graph = true;
 
   const handleClick = (e) => {
     document.querySelector(".selected").classList.remove("selected");

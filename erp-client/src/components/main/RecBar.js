@@ -108,7 +108,9 @@ const RecBar = ({ graph }) => {
         <div className="recBar__body">
           {/* {loadData.map(async (data, idx) => {
             return await (<Graph key={idx} idx={idx} />);
-          })} */}
+          })} 
+          const graph = [data];
+          */}
           {loadData.forEach((data) => vegaEmbed(`.recBar__body`, data))}
         </div>
       </div>

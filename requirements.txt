@@ -20,9 +20,6 @@ kiwisolver
 Markdown 
 MarkupSafe==1.1.1
 matplotlib 
-mkl-fft
-mkl-random
-mkl-service
 numpy 
 olefile==0.46
 Pillow 

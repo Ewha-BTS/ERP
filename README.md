@@ -1,10 +1,24 @@
 # ERP: Customizing Recommended Data Visualization Plots
 
+[ERP 배포 사이트](https://ewhabts-erp.herokuapp.com/)
+
+<hr style="height: auto; width: 50%; border-bottom: 5px solid; color: darkgreen; margin: 0 auto" />
+
+<br />
+
+
+
 Visualization recommender systems automatically generate chart results which prevent analysts to manually make them but just select the most liked result among the list.  Here, we demonstrate **a deep learning-based visualization recommendation system** that suggests visualization type and design choices learned from a large corpus of datasets and associated visualizations.
 
 <br />
 
+
+
 본 프로젝트는 데이터를 이해하여 Plot을 생성하고 추천해주는 딥러닝 추천 시스템 모델을 이용하여 사용자에게 몇 가지 Plot들을 추천해주는 기술(Visualization Recommendation)을 구현합니다. 더하여, 사용자가 직접 여러 차트들을 관리하고 필요에 맞게 이를 배치할 수 있는 대시보드를 구현하여 사용성을 증대시킨 웹 어플리케이션을 최종적으로 구현합니다.
+
+<br />
+
+
 
 
 ## Team Info
@@ -13,8 +27,10 @@ Visualization recommender systems automatically generate chart results which pre
 
 - 김연수 : Ewha w.univ.
     - [Github](https://github.com/yskim0)
+    - 백엔드, 모델
 - 나정현 : Ewha w.univ.
     - [Github](https://github.com/leahincom)
+    - 프론트엔드
 
 <br />
 
@@ -153,7 +169,7 @@ zipp
 
 
 
-## 실행 방법
+## 실행 방법 (local)
 
 1. 이 저장소를 로컬 저장소에 클론한다.
 

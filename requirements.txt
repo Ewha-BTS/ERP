@@ -1,43 +1,45 @@
-astroid==1.6.6
-autopep8==1.4.4
-backports.functools-lru-cache==1.6.1
-beautifulsoup4==4.8.1
-bs4==0.0.1
-certifi==2019.11.28
-chardet==3.0.4
-configparser==4.0.2
-contextlib2==0.6.0.post1
-entrypoints==0.3
-enum34==1.1.6
-flake8==3.7.9
-functools32==3.2.3.post2
-future==0.18.2
-futures==3.3.0
-idna==2.8
-importlib-metadata==1.1.0
-isort==4.3.21
-jedi==0.15.1
-lazy-object-proxy==1.4.3
-mccabe==0.6.1
-more-itertools==5.0.0
-parso==0.5.1
-pathlib2==2.3.5
-pluggy==0.13.1
-pycodestyle==2.5.0
-pydocstyle==3.0.0
-pyflakes==2.1.1
-pylint==1.9.5
-python-jsonrpc-server==0.3.1
-requests==2.22.0
-rope==0.14.0
-scandir==1.10.0
-singledispatch==3.4.0.3
-six==1.13.0
-snowballstemmer==2.0.0
-soupsieve==1.9.5
-typing==3.7.4.1
-ujson==1.35
-urllib3==1.25.7
-wrapt==1.11.2
-yapf==0.29.0
-zipp==0.6.0
+absl-py @ file:///tmp/build/80754af9/absl-py_1615411197583/work
+astor==0.8.1
+certifi==2020.12.5
+cffi==1.14.5
+click==7.1.2
+cryptography==3.4.7
+cycler==0.10.0
+dnspython==2.1.0
+Flask==1.1.2
+Flask-Cors==3.0.10
+Flask-PyMongo==2.3.0
+gast @ file:///tmp/build/80754af9/gast_1597433534803/work
+grpcio==1.14.1
+h5py @ file:///tmp/build/80754af9/h5py_1593454121459/work
+importlib-metadata @ file:///tmp/build/80754af9/importlib-metadata_1617877310517/work
+itsdangerous==1.1.0
+Jinja2==2.11.3
+Keras-Applications @ file:///tmp/build/80754af9/keras-applications_1594366238411/work
+Keras-Preprocessing @ file:///tmp/build/80754af9/keras-preprocessing_1612283640596/work
+kiwisolver @ file:///tmp/build/80754af9/kiwisolver_1612282412546/work
+Markdown @ file:///tmp/build/80754af9/markdown_1614363833670/work
+MarkupSafe==1.1.1
+matplotlib @ file:///tmp/build/80754af9/matplotlib-suite_1613407855456/work
+mkl-fft==1.3.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1603487797006/work
+olefile==0.46
+Pillow @ file:///tmp/build/80754af9/pillow_1617386154532/work
+protobuf==3.14.0
+pycparser==2.20
+pymongo==3.11.4
+pyOpenSSL==20.0.1
+pyparsing @ file:///home/linux1/recipes/ci/pyparsing_1610983426697/work
+python-dateutil @ file:///home/ktietz/src/ci/python-dateutil_1611928101742/work
+PyYAML==5.4.1
+scipy @ file:///tmp/build/80754af9/scipy_1597686625380/work
+six @ file:///tmp/build/80754af9/six_1605205335545/work
+tensorboard==1.12.2
+tensorflow==1.12.0
+termcolor==1.1.0
+tornado @ file:///tmp/build/80754af9/tornado_1606942266872/work
+typing-extensions @ file:///home/ktietz/src/ci_mi/typing_extensions_1612808209620/work
+Werkzeug @ file:///home/ktietz/src/ci/werkzeug_1611932622770/work
+zipp @ file:///tmp/build/80754af9/zipp_1615904174917/work

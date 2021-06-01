@@ -1,1 +1,1 @@
-worker: python ./erp-server/app.py
+web: gunicorn app:app

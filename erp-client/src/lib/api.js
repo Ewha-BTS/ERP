@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const server = axios.create({
-  baseURL: "https://ewhabts-erp.herokuapp.com",
+  baseURL: "http://203.255.176.80:5018/",
   timeout: 1000
 });
 

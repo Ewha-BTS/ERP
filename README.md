@@ -146,6 +146,8 @@ zipp
 | [examples](https://github.com/victordibia/data2vis/blob/master/examples) | Directory containing 4300 Vega-lite example visualization specifications |
 | [sourcedata](https://github.com/victordibia/data2vis/blob/master/sourcedata) | Directory containing `training data` (source, target pairs split into train/dev/test sets) used to train the seq2seq model. You can take a look at the [data_gen.py](https://github.com/victordibia/data2vis/blob/master/utils/data_gen.py) script to see how the this training data is generated from the example |
 
+- data2vis에서 사용된 데이터셋입니다. 
+
 <br />
 
 
@@ -192,9 +194,11 @@ zipp
 
 #### Back-end
 
-* Flask
 * Python
+* Flask
+* MongoDB
 * Tensorflow
+
 
 <br />
 

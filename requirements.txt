@@ -8,7 +8,8 @@ dnspython==2.1.0
 Flask==1.1.2
 Flask-Cors==3.0.10
 Flask-PyMongo==2.3.0
-gast 
+gast
+gunicorn
 grpcio==1.14.1
 h5py 
 importlib-metadata 

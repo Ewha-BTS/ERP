@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const server = axios.create({
-  baseURL: "http://203.255.176.80:5018/"
-  // timeout: 1000
+  baseURL: "https://ewhabts-erp.herokuapp.com",
+  timeout: 1000
 });
 
 export const postSampleData = async (formData) => {

@@ -1,0 +1,1 @@
+{"num0": "00501", "num1": "40.922326", "num2": "-72.637078", "str0": "Holtsville", "str1": "NY", "str2": "Suffolk"}

@@ -1,6 +1,6 @@
 # ERP: Customizing Recommended Data Visualization Plots
 
-[ERP 배포 사이트](https://ewhabts-erp.herokuapp.com/)
+[ERP 배포 사이트](https://ewhabts-erp.herokuapp.com/) **_( will be updated soon! plz wait for our new release version 🙌 )_**
 
 <hr style="height: auto; width: 50%; border-bottom: 5px solid; color: darkgreen; margin: 0 auto" />
 
@@ -30,7 +30,7 @@ Visualization recommender systems automatically generate chart results which pre
     - 백엔드, 모델
 - 나정현 : Ewha w.univ.
     - [Github](https://github.com/leahincom)
-    - 프론트엔드
+    - 프론트엔드, 백엔드(Node.js)
 
 <br />
 
@@ -40,7 +40,7 @@ Visualization recommender systems automatically generate chart results which pre
 
 Check out our short demo (incomplete version)
 
-[demo video]()
+[demo video](https://drive.google.com/file/d/1E8cRhCc5dGucIpP8IsikyidfsE1v54Ja/view?usp=sharing)
 
 <br />
 
@@ -77,13 +77,42 @@ Check out our short demo (incomplete version)
 <br />
 
 
-
 #### My Page
 
-\######이부분 수정 부탁######
+<img width="1264" alt="마이페이지" src="https://user-images.githubusercontent.com/49134038/142229755-5fb2f296-0a52-4251-b172-7a69bd702a02.png">
+
+
+> 1. 로그인 시 마이페이지 이동 로고 생성
+> 2. 마이페이지에서 계정 정보 업데이트 가능
 
 <br />
 
+
+
+## Front Library (package.json)
+```
+"@fortawesome/fontawesome-svg-core": "^1.2.36",
+"@fortawesome/free-brands-svg-icons": "^5.15.4",
+"@fortawesome/free-regular-svg-icons": "^5.15.4",
+"@fortawesome/free-solid-svg-icons": "^5.15.4",
+"@fortawesome/react-fontawesome": "^0.1.15",
+"fontsource-nunito-sans": "^4.0.0",
+"fontsource-roboto": "^4.0.0",
+"json-server": "^0.16.3",
+"match-sorter": "^6.3.0",
+"next": "11.1.0",
+"next-cookies": "^2.0.3",
+"next-images": "^1.8.1",
+"react": "17.0.2",
+"react-beautiful-dnd": "^13.1.0",
+"react-contenteditable": "^3.3.6",
+"react-dom": "17.0.2",
+"react-vega": "^7.4.4",
+"recoil": "^0.4.1",
+"styled-components": "^5.3.0",
+"vega": "^5.21.0",
+"vega-lite": "^5.1.1"
+```
 
 
 ## Requirements

@@ -48,50 +48,31 @@ Check out our short demo (incomplete version)
 
 #### Main Dashboard
 
-![Group 1](https://user-images.githubusercontent.com/49134038/120289713-8989f900-c2fc-11eb-9664-3fef9ebf7788.png)
+<img width="500" alt="스크린샷 2021-11-17 오후 2 24 14" src="https://user-images.githubusercontent.com/48315997/142139982-22f84b75-371e-4fc5-b4c7-305ba5086156.png">
 
-> 1. 저장된 chart 리스트를 왼쪽에 보여주기
+
+
+> - 저장된 chart 리스트를 왼쪽에 보여주기
 >
-> 2. 사용자가 임의로 chart를 drag-n-drop 하여 레이아웃 배치
->
-> 3. chart 선택 시 detail 수정할 수 있는 팝업창 띄우기
->
-> 4. dataset numerical summary chart
->
->    → 미리 정의한 aggregation function들을 (e.g. max, min, total...) 사용자가 속성으로 추가 및 변경 가능
+> - 사용자가 임의로 chart를 drag-n-drop 하여 레이아웃 배치
+> - 마크다운 문법의 텍스트 수정 가능
+
 
 <br />
 
 
-
-#### User-Define Dashboard
-
-![Group 2](https://user-images.githubusercontent.com/49134038/120289674-80009100-c2fc-11eb-983e-5991b506e3a4.png)
-
-> *사용자가...*
->
-> 1. 차트 유형 선택
-> 2. 파라미터 (행, 열 등) drag-n-drop 으로 설정
-> 3. 기타 요소 선택
-> 4. 새로운 chart 생성
-> 5. chart 저장
-
-<br />
 
 
 
 #### Recommendation Dashboard
 
-![Group 3](https://user-images.githubusercontent.com/49134038/120289667-80009100-c2fc-11eb-8152-c4d8187b846f.png)
+<img width="1111" alt="스크린샷 2021-11-17 오후 2 25 34" src="https://user-images.githubusercontent.com/48315997/142140112-711db5db-b338-42cd-afe6-c91efc8d1692.png">
 
-![Group 4](https://user-images.githubusercontent.com/49134038/120289665-7e36cd80-c2fc-11eb-96f0-e32614408a65.png)
 
 > 1. dataset 넣기(샘플데이터셋/Your Dataset)
 > 2. 적절한 chart recommendation Top-k개 리스트업 해서 오른쪽에 띄우기
 > 3. 사용자가 chart 선택
-> 4. 왼쪽에 chart와 detail 띄우기
-> 5. detail 수정하기
-> 6. chart 저장
+> 4. chart 저장
 
 <br />
 
@@ -99,7 +80,7 @@ Check out our short demo (incomplete version)
 
 #### My Page
 
-![Group 6](https://user-images.githubusercontent.com/49134038/120290677-8a6f5a80-c2fd-11eb-9e53-7e0bf21e3b18.png)
+\######이부분 수정 부탁######
 
 <br />
 
@@ -183,7 +164,9 @@ zipp
 
 - `pip install -r requirements.txt`
 
-3. `python app.py` or `python3 app.py` ; 서버를 실행한다.
+3. `python server.py` or `python3 server.py` ; </br> 
+############이 부분 노드 서버 실행 명령어 ############
+서버를 실행한다.
 
 - 실행 전 유의 사항
     - 학습한 모델은 깃허브 용량 초과(100MB 초과)로 인해 업로드하지 못하였습니다.
@@ -198,7 +181,6 @@ zipp
 
 * `npm start`
 
-![Group 3](https://user-images.githubusercontent.com/49134038/120289667-80009100-c2fc-11eb-8152-c4d8187b846f.png)
 
 <br>
 
@@ -218,6 +200,7 @@ zipp
 
 #### Back-end
 
+* node.js
 * Python
 * Flask
 * MongoDB

@@ -7,8 +7,6 @@ const getPages = async (headers: Headers) => {
       headers,
     }).then((res) => res.json());
 
-    console.log('[SUCCESS] GET pages data', data);
-
     return data;
   } catch (err) {
     console.log('[FAIL]', err);

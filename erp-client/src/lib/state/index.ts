@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 
-import { PlotType } from './type';
+import { PlotType } from '../type';
 
 export const loginState = atom<boolean>({
   key: 'login',
@@ -20,4 +20,9 @@ export const modelDataState = atom<PlotType[] | null>({
 export const selectedPlotState = atom<PlotType | null>({
   key: 'selectedPlot',
   default: null,
+});
+
+export const isSideBarOpen = atom<boolean>({
+  key: 'isSideBarOpen',
+  default: false,
 });

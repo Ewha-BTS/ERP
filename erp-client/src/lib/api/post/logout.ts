@@ -7,8 +7,6 @@ const logout = async () => {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    console.log('LOGOUT', data);
-
     return data;
   } catch (err) {
     console.log('[FAIL]', err);

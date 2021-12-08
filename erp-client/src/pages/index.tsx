@@ -1,7 +1,7 @@
 import type { NextPageContext } from 'next';
 
 import EditablePage from '../components/common/EditablePage';
-import { postPages } from '../lib/api/usePosts';
+import { postPages } from '../lib/api/post';
 import { BlockType } from '../lib/type';
 import objectId from '../utils/objectId';
 
@@ -17,20 +17,21 @@ const IndexPage = ({ pid, blocks, err }: PageProps) => {
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const blocks = [{ tag: 'p', html: '', imageUrl: '', id: objectId() }];
-  const res = context.res;
   const req = context.req;
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
-  req && req.headers && req.headers.cookie && headers.append('Cookie', req.headers.cookie);
+  req?.headers.cookie && headers.append('Cookie', req.headers.cookie);
 
   try {
-    const data = await postPages(headers, blocks);
-    const pageId = data.pageId;
-    const creator = data.creator;
-    const query = !creator ? '?public=true' : '';
-    res?.writeHead(302, { Location: `/p/${pageId}${query}` });
-    res?.end();
-    return { props: {} };
+    const pages = await postPages(headers, blocks);
+    const pageId = pages.pageId;
+    return {
+      props: {},
+      redirect: {
+        destination: `/p/${pageId}?public=true`,
+        statusCode: 302,
+      },
+    };
   } catch (err) {
     console.log(err);
     return { props: { blocks: null, pid: null, err: true } };

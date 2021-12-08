@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Input from '../components/common/Input';
 import Notice from '../components/common/Notice';
-import { UserDispatchContext } from '../context/UserContext';
-import { login } from '../lib/api/usePosts';
+import { login } from '../lib/api/post';
 import { userIdState } from '../lib/state';
 import { FormType } from '../lib/type';
 
@@ -23,6 +22,14 @@ const LoginWrapper = styled.section`
   margin: 0 35%;
   width: 100%;
   height: 100%;
+`;
+
+const SignUpWrapper = styled(Link)`
+  font-weight: bold;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const form = {
@@ -46,11 +53,9 @@ const form = {
 };
 
 const LoginPage = () => {
+  const router = useRouter();
   const RESET_NOTICE = { type: '', message: '' };
   const [notice, setNotice] = useState(RESET_NOTICE);
-  const dispatch = useContext(UserDispatchContext);
-  const router = useRouter();
-
   const [formData, setFormData] = useState<FormType>({ email: '', password: '' });
   const setUserId = useSetRecoilState(userIdState);
 
@@ -62,18 +67,18 @@ const LoginPage = () => {
     e.preventDefault();
     setNotice(RESET_NOTICE);
     try {
-      const data = await login(formData);
-      if (data.errcode) {
-        setNotice({ type: 'ERROR', message: data.message });
+      const user = await login(formData);
+      if (user.errcode) {
+        setNotice({ type: 'ERROR', message: user.message });
+        setUserId(null);
       } else {
-        dispatch({ type: 'LOGIN' });
-        setUserId(data.userId);
+        setUserId(user.userId);
         router.push('/pages');
       }
     } catch (err) {
       console.log(err);
       setNotice({ type: 'ERROR', message: 'Something unexpected happened.' });
-      dispatch({ type: 'LOGOUT' });
+      setUserId(null);
     }
   };
 
@@ -106,15 +111,15 @@ const LoginPage = () => {
           </Notice>
         )}
         <button type='submit'>Login</button>
-        {/* <button type='button' onClick={handlePasswordReset}>
-          Forgot password ?
-        </button> */}
+        <button type='button' onClick={handlePasswordReset}>
+          Forgot password?
+        </button>
       </form>
       <p>
         Don&apos;t have an account yet?{' '}
-        <Link href='/signup' passHref>
-          <strong>Sign up here.</strong>
-        </Link>
+        <SignUpWrapper href='/signup' passHref>
+          Sign up here.
+        </SignUpWrapper>
       </p>
     </LoginWrapper>
   );

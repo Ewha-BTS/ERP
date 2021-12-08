@@ -3,7 +3,8 @@ import { BlockType } from '../../type';
 
 const postPages = async (headers: Headers, blocks: BlockType[]) => {
   try {
-    const data = await fetch(`${BASEURL}/pages`, {
+    // axios로 변경한 뒤 then 제거
+    const pages = await fetch(`${BASEURL}/pages`, {
       method: 'POST',
       credentials: 'include',
       headers,
@@ -12,9 +13,7 @@ const postPages = async (headers: Headers, blocks: BlockType[]) => {
       }),
     }).then((res) => res.json());
 
-    console.log('[SUCCESS] POST pages data', data);
-
-    return data;
+    return pages;
   } catch (err) {
     console.log('[FAIL] POST pages data', err);
   }

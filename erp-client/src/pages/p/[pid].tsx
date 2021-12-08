@@ -1,13 +1,23 @@
 import { NextPageContext } from 'next';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { resetServerContext } from 'react-beautiful-dnd';
+import { useSetRecoilState } from 'recoil';
 
 import { PageProps } from '..';
 import EditablePage from '../../components/common/EditablePage';
 import SideBar from '../../components/common/SideBar';
-import { getPage } from '../../lib/api/useGets/';
+import { getPage } from '../../lib/api/get';
+import { isSideBarOpen, selectedPlotState } from '../../lib/state';
 
 const Page = ({ pid, blocks, err }: PageProps) => {
+  const setIsVisible = useSetRecoilState(isSideBarOpen);
+  const setSelectedPlot = useSetRecoilState(selectedPlotState);
+
+  useEffect(() => {
+    setIsVisible(false);
+    setSelectedPlot(null);
+  }, []);
+
   return (
     <>
       <SideBar />

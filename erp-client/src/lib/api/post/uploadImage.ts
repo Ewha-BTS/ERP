@@ -7,8 +7,6 @@ const uploadImage = async (pageId: string, formData: FormData) => {
       body: formData,
     }).then((res) => res.json());
 
-    console.log('[SUCCESS] POST image data', data);
-
     return data;
   } catch (err) {
     console.log('[FAIL]', err);

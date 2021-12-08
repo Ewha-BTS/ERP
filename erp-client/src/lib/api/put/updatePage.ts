@@ -12,8 +12,6 @@ const updatePage = async (blocks: BlockType[], id: string) => {
       }),
     });
 
-    console.log('[SUCCESS] PUT page data');
-
     return data;
   } catch (err) {
     console.log('[FAIL]', err);

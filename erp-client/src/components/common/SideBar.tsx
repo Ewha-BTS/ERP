@@ -5,8 +5,8 @@ import { VegaLite, VisualizationSpec } from 'react-vega';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import { getSavedPlots, getUploadHistory } from '../../lib/api/useGets';
-import { modelDataState, selectedPlotState, userIdState } from '../../lib/state';
+import { getSavedPlots, getUploadHistory } from '../../lib/api/get';
+import { isSideBarOpen, modelDataState, selectedPlotState, userIdState } from '../../lib/state';
 import { PlotType, PlotDataType, FileType } from '../../lib/type';
 
 const SideBarWrapper = styled.section`
@@ -30,7 +30,12 @@ const SideBarWrapper = styled.section`
   &.shrink {
     width: 10%;
 
-    img {
+    > * {
+      visibility: hidden;
+    }
+
+    .arrow {
+      visibility: visible;
       transform: rotate(180deg);
     }
   }
@@ -72,10 +77,10 @@ const VegaLiteWrapper = styled.div`
 const SideBar = () => {
   const modelData = useRecoilValue(modelDataState);
   const setSelectedPlot = useSetRecoilState(selectedPlotState);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useRecoilState(isSideBarOpen);
   const [spec, setSpec] = useState<VisualizationSpec[] | null>(null);
   const [values, setValues] = useState<PlotDataType[] | null>(null);
-  const [fileList, setFileList] = useState<FileType[] | null>();
+  const [fileList, setFileList] = useState<[string[]] | null>(); // history: [[file_id, file_name], ...]
   const [fileId, setFileId] = useState<string | null>();
   const [savedPlots, setSavedPlots] = useState<PlotType[] | null>();
   const userId = useRecoilValue(userIdState);
@@ -85,11 +90,13 @@ const SideBar = () => {
     const getFiles = async () => {
       if (userId) {
         const files = await getUploadHistory(userId);
-        setFileList(files);
+        files && setFileList(files.history);
       }
     };
-    getFiles();
-  }, [userId]);
+    if (router.pathname.includes('/p/') && isVisible) {
+      getFiles();
+    }
+  }, []);
 
   useEffect(() => {
     const tempSpec: VisualizationSpec[] = [];
@@ -109,12 +116,6 @@ const SideBar = () => {
     setIsVisible(true);
   }, [modelData]);
 
-  const handleFileClick = async (id: string) => {
-    setFileId(id);
-    const plots = await getSavedPlots(id);
-    setSavedPlots(plots);
-  };
-
   useEffect(() => {
     const tempSpec: VisualizationSpec[] = [];
     const tempValues: PlotDataType[] = [];
@@ -133,6 +134,12 @@ const SideBar = () => {
     setIsVisible(true);
   }, [savedPlots]);
 
+  const handleFileClick = async (id: string) => {
+    setFileId(id);
+    const plots = await getSavedPlots(id);
+    setSavedPlots(plots);
+  };
+
   const handlePlotClick = (idx: number) => {
     modelData && setSelectedPlot(modelData[idx]);
     window.scroll({
@@ -145,13 +152,13 @@ const SideBar = () => {
   return (
     <SideBarWrapper className={[!isVisible && 'shrink'].join(' ')}>
       <IconWrapper onClick={() => setIsVisible(!isVisible)}>
-        <img src='/assets/icons/FoldArrow.svg' />
+        <img src='/assets/icons/FoldArrow.svg' className='arrow' />
       </IconWrapper>
       <DataWrapper>
         {router.pathname.includes('/p/') && fileList && !fileId
-          ? fileList.map((file: FileType) => (
-              <OptionWrapper key={file.id} onClick={() => handleFileClick(file.id)}>
-                {file.name}
+          ? fileList.map((file) => (
+              <OptionWrapper key={file[0]} onClick={() => handleFileClick(file[0])}>
+                {file[1]}
               </OptionWrapper>
             ))
           : spec &&
@@ -161,14 +168,6 @@ const SideBar = () => {
                 <VegaLite spec={info} data={values[idx]} />
               </VegaLiteWrapper>
             ))}
-        {router.pathname.includes('/recommend') &&
-          spec &&
-          values &&
-          spec.map((info, idx) => (
-            <VegaLiteWrapper key={idx} onClick={() => handlePlotClick(idx)}>
-              <VegaLite spec={info} data={values[idx]} />
-            </VegaLiteWrapper>
-          ))}
       </DataWrapper>
     </SideBarWrapper>
   );

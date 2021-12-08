@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { usePrevious } from '../../hooks';
-import { deleteImage } from '../../lib/api/useDeletes';
-import { updatePage } from '../../lib/api/usePuts';
-import { BlockType } from '../../lib/type';
+import { deleteImage } from '../../lib/api/delete';
+import { updatePage } from '../../lib/api/put';
+import { isSideBarOpen, selectedPlotState } from '../../lib/state';
 import { PageProps } from '../../pages';
 import objectId from '../../utils/objectId';
 import setCaretToEnd from '../../utils/setCaretToEnd';
@@ -19,7 +19,6 @@ const EditablePageWrapper = styled.section`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   margin: 0 20px 0 50px;
   width: 100%;
   height: 100%;
@@ -36,40 +35,65 @@ const ButtonWrapper = styled.div`
     margin: 0 20px;
   }
 `;
+// A page is represented by an array containing several blocks
+// [
+//   {
+//     _id: "5f54d75b114c6d176d7e9765",
+//     html: "Heading",
+//     tag: "h1",
+//     imageUrl: "",
+//   },
+//   {
+//     _id: "5f54d75b114c6d176d7e9766",
+//     html: "I am a <strong>paragraph</strong>",
+//     tag: "p",
+//     imageUrl: "",
+//   },
+//     _id: "5f54d75b114c6d176d7e9767",
+//     html: "/im",
+//     tag: "img",
+//     imageUrl: "images/test.png",
+//   }
+// ]
 
 const EditablePage = ({ pid: id, blocks: fetchedBlocks, err }: PageProps) => {
   const router = useRouter();
   const [blocks, setBlocks] = useState(fetchedBlocks);
-  const [currentBlockId, setCurrentBlockId] = useState('');
+  const [currentBlockId, setCurrentBlockId] = useState();
+  const setIsVisible = useSetRecoilState(isSideBarOpen);
+  const selectedPlot = useRecoilValue(selectedPlotState);
 
   const prevBlocks = usePrevious(blocks);
 
+  // Update the database whenever blocks change
   useEffect(() => {
     if (prevBlocks && prevBlocks !== blocks) {
       updatePage(blocks, id);
     }
   }, [blocks, prevBlocks]);
 
+  // Handling the cursor and focus on adding and deleting blocks
   useEffect(() => {
-    if (prevBlocks && blocks && prevBlocks.length + 1 === blocks.length) {
-      const nextBlockPosition = blocks.map((b) => b.id).indexOf(currentBlockId) + 1;
-      const nextBlock = document.querySelector(`[data-position="${nextBlockPosition}]`);
+    // If a new block was added, move the caret to it
+    if (prevBlocks && prevBlocks.length + 1 === blocks.length) {
+      const nextBlockPosition = blocks.map((b) => b._id).indexOf(currentBlockId) + 1 + 1;
+      const nextBlock = document.querySelector(`[data-position="${nextBlockPosition}"]`);
       if (nextBlock) {
-        (nextBlock as HTMLElement).focus();
+        (nextBlock as any).focus();
       }
     }
-
-    if (prevBlocks && blocks && prevBlocks.length - 1 === blocks.length) {
-      const lastBlockPosition = prevBlocks.map((b) => b.id).indexOf(currentBlockId);
-      const lastBlock = document.querySelector(`[data-position="${lastBlockPosition}]`);
+    // If a block was deleted, move the caret to the end of the last block
+    if (prevBlocks && prevBlocks.length - 1 === blocks.length) {
+      const lastBlockPosition = prevBlocks.map((b) => b._id).indexOf(currentBlockId);
+      const lastBlock = document.querySelector(`[data-position="${lastBlockPosition}"]`);
       if (lastBlock) {
-        setCaretToEnd(lastBlock as HTMLElement);
+        setCaretToEnd(lastBlock as any);
       }
     }
   }, [blocks, prevBlocks, currentBlockId]);
 
-  const updateBlockHandler = (currentBlock: BlockType) => {
-    const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
+  const updateBlockHandler = (currentBlock: any) => {
+    const index = blocks.map((b) => b._id).indexOf(currentBlock.id);
     const oldBlock = blocks[index];
     const updatedBlocks = [...blocks];
     updatedBlocks[index] = {
@@ -79,17 +103,18 @@ const EditablePage = ({ pid: id, blocks: fetchedBlocks, err }: PageProps) => {
       imageUrl: currentBlock.imageUrl,
     };
     setBlocks(updatedBlocks);
-
+    // If the image has been changed, we have to delete the
+    // old image file on the server
     if (oldBlock.imageUrl && oldBlock.imageUrl !== currentBlock.imageUrl) {
       deleteImage(oldBlock.imageUrl);
     }
   };
 
-  const addBlockHandler = (currentBlock: BlockType) => {
+  const addBlockHandler = (currentBlock: any) => {
     setCurrentBlockId(currentBlock.id);
-    const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
+    const index = blocks.map((b) => b._id).indexOf(currentBlock.id);
     const updatedBlocks = [...blocks];
-    const newBlock: BlockType = { id: objectId(), tag: 'p', html: '', imageUrl: '' };
+    const newBlock = { _id: objectId(), tag: 'p', html: '', imageUrl: '' };
     updatedBlocks.splice(index + 1, 0, newBlock);
     updatedBlocks[index] = {
       ...updatedBlocks[index],
@@ -100,15 +125,16 @@ const EditablePage = ({ pid: id, blocks: fetchedBlocks, err }: PageProps) => {
     setBlocks(updatedBlocks);
   };
 
-  const deleteBlockHandler = (currentBlock: BlockType) => {
+  const deleteBlockHandler = (currentBlock: any) => {
     if (blocks.length > 1) {
       setCurrentBlockId(currentBlock.id);
-      const index = blocks.map((b) => b.id).indexOf(currentBlock.id);
+      const index = blocks.map((b) => b._id).indexOf(currentBlock.id);
       const deletedBlock = blocks[index];
       const updatedBlocks = [...blocks];
       updatedBlocks.splice(index, 1);
       setBlocks(updatedBlocks);
-
+      // If the deleted block was an image block, we have to delete
+      // the image file on the server
       if (deletedBlock.tag === 'img' && deletedBlock.imageUrl) {
         deleteImage(deletedBlock.imageUrl);
       }
@@ -118,6 +144,8 @@ const EditablePage = ({ pid: id, blocks: fetchedBlocks, err }: PageProps) => {
   const onDragEndHandler = (result: DropResult) => {
     const { destination, source } = result;
 
+    // If we don't have a destination (due to dropping outside the droppable)
+    // or the destination hasn't changed, we change nothing
     if (!destination || destination.index === source.index) {
       return;
     }
@@ -128,25 +156,6 @@ const EditablePage = ({ pid: id, blocks: fetchedBlocks, err }: PageProps) => {
     setBlocks(updatedBlocks);
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    try {
-      await updatePage(blocks, id);
-      router.push('/pages');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  if (err) {
-    return (
-      <Notice status='ERROR'>
-        <h3>Something went wrong 💔</h3>
-        <p>Have you tried to restart the app at &apos;/&apos; ?</p>
-      </Notice>
-    );
-  }
-
   const isNewPublicPage = router.query.public === 'true';
   return (
     <EditablePageWrapper>
@@ -156,33 +165,34 @@ const EditablePage = ({ pid: id, blocks: fetchedBlocks, err }: PageProps) => {
           <p>It will be automatically deleted after 24 hours.</p>
         </Notice>
       )}
-      <form id='save_page' onSubmit={handleSubmit} style={{ height: '100%' }}>
-        <DragDropContext onDragEnd={onDragEndHandler}>
-          <Droppable droppableId={id}>
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps} style={{ height: '80%' }}>
-                {blocks.map((block: BlockType) => {
-                  const position = blocks.map((b: BlockType) => b.id).indexOf(block.id) + 1;
-                  return (
-                    <EditableBlock
-                      key={block.id}
-                      position={position}
-                      id={block.id}
-                      tag={block.tag}
-                      html={block.html}
-                      imageUrl={block.imageUrl}
-                      pageId={id}
-                      addBlock={addBlockHandler}
-                      deleteBlock={deleteBlockHandler}
-                      updateBlock={updateBlockHandler}
-                    />
-                  );
-                })}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </form>
+      <DragDropContext onDragEnd={onDragEndHandler}>
+        <Droppable droppableId={id}>
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {blocks.map((block) => {
+                const position = blocks.map((b) => b._id).indexOf(block._id) + 1;
+                return (
+                  <EditableBlock
+                    key={block._id}
+                    position={position}
+                    id={block._id}
+                    tag={block.tag}
+                    html={block.html}
+                    imageUrl={block.imageUrl}
+                    pageId={id}
+                    addBlock={addBlockHandler}
+                    deleteBlock={deleteBlockHandler}
+                    updateBlock={updateBlockHandler}
+                    setIsVisible={setIsVisible}
+                    selectedPlot={selectedPlot}
+                  />
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </EditablePageWrapper>
   );
 };

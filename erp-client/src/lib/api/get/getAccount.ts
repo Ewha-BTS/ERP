@@ -1,13 +1,11 @@
 import { BASEURL } from '..';
-const getPage = async (headers: Headers, id: string | string[] | undefined) => {
+const getAccount = async (headers: Headers) => {
   try {
-    const data = await fetch(`${BASEURL}/pages/${id}`, {
+    const data = await fetch(`${BASEURL}/users/account`, {
       method: 'GET',
       credentials: 'include',
       headers,
     }).then((res) => res.json());
-
-    console.log('[SUCCESS] GET page data', data);
 
     return data;
   } catch (err) {
@@ -15,4 +13,4 @@ const getPage = async (headers: Headers, id: string | string[] | undefined) => {
   }
 };
 
-export default getPage;
+export default getAccount;

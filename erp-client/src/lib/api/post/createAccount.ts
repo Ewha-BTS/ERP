@@ -1,10 +1,10 @@
 import { BASEURL } from '..';
 import { FormType } from '../../type';
 
-const updateAccount = async (formData: FormType) => {
+const createAccount = async (formData: FormType) => {
   try {
-    const data = await fetch(`${BASEURL}/users/account`, {
-      method: 'PUT',
+    const data = await fetch(`${BASEURL}/users/signup`, {
+      method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -14,12 +14,10 @@ const updateAccount = async (formData: FormType) => {
       }),
     }).then((res) => res.json());
 
-    console.log('[SUCCESS] PUT account data');
-
     return data;
   } catch (err) {
     console.log('[FAIL]', err);
   }
 };
 
-export default updateAccount;
+export default createAccount;

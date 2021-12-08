@@ -80,7 +80,7 @@ const allowedTags = [
   {
     id: 'image',
     tag: 'img',
-    label: 'Image',
+    label: 'Plot',
   },
 ];
 

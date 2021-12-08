@@ -1,19 +1,20 @@
 import { MODELURL } from '..';
-
-import { PlotType } from './../../type';
+import { PlotType } from '../../type';
 
 const savePlot = async (fileId: string, plot: PlotType) => {
   try {
-    const data = await fetch(`${MODELURL}/save`, {
+    const save = await fetch(`${MODELURL}/save`, {
       method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         file_id: fileId,
         plot,
       }),
     }).then((res) => res.json());
 
-    console.log('[SUCCESS] SAVE plot data', data);
-    return data.data;
+    console.log('[SUCCESS] SAVE plot data', save);
+    return save;
   } catch (err) {
     console.log('[FAIL] SAVE plot data', err);
     alert('플랏 저장에 실패하였습니다.');

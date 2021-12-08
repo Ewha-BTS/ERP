@@ -2,9 +2,9 @@
 import React, { RefObject } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import ContentEditable from 'react-contenteditable';
-import styled from 'styled-components';
+import { VegaLite } from 'react-vega';
 
-import { uploadImage } from '../../lib/api/usePosts';
+import { uploadImage } from '../../lib/api/post';
 import { StateType } from '../../lib/type';
 import { setCaretToEnd, getCaretCoordinates, getSelection } from '../../utils/';
 
@@ -239,6 +239,9 @@ class EditableBlock extends React.Component<any, StateType> {
             this.closeTagSelectorMenu();
           });
       } else {
+        if (tag === 'img') {
+          this.props.setIsVisible(true);
+        }
         this.setState({ ...this.state, tag }, () => {
           this.closeTagSelectorMenu();
         });
@@ -367,7 +370,22 @@ class EditableBlock extends React.Component<any, StateType> {
                     this.state.actionMenuOpen || this.state.tagSelectorMenuOpen ? 'blockSelected' : null,
                   ].join(' ')}
                 >
-                  {<img src='/assets/images/Plot0.jpeg' alt='plot' />}
+                  {this.props.selectedPlot ? (
+                    <VegaLite
+                      spec={{
+                        description: 'saved plots',
+                        mark: this.props.selectedPlot.mark,
+                        encoding: JSON.parse(JSON.stringify(this.props.selectedPlot.encoding)),
+                        data: { name: 'table' },
+                        padding: 5,
+                      }}
+                      data={{ table: JSON.parse(JSON.stringify(this.props.selectedPlot.data.values)) }}
+                    />
+                  ) : (
+                    <label htmlFor={`${this.props.id}_fileInput`} className='fileInputLabel'>
+                      No Plot Selected. Select one first.
+                    </label>
+                  )}
                   {/* <input
                     id={`${this.props.id}_fileInput`}
                     name={this.state.tag}

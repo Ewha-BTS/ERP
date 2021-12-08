@@ -15,7 +15,7 @@ export type ItemType = {
 
 export type BlockType = {
   _id?: string;
-  id: string;
+  id?: string;
   tag: string;
   html: string;
   imageUrl: string;

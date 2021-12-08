@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import Input from '../components/common/Input';
 import Notice from '../components/common/Notice';
-import { getAccount } from '../lib/api/useGets';
-import { updateAccount } from '../lib/api/usePuts';
+import { getAccount } from '../lib/api/get';
+import { updateAccount } from '../lib/api/put';
 import { UserType } from '../lib/type';
 
 const AccountWrapper = styled.section`
@@ -71,9 +71,9 @@ const AccountPage = (user: UserType) => {
     setNotice(RESET_NOTICE);
 
     try {
-      const data = await updateAccount(formData);
-      if (data.errCode) {
-        setNotice({ type: 'ERROR', message: data.message });
+      const account = await updateAccount(formData);
+      if (account.errCode) {
+        setNotice({ type: 'ERROR', message: account.message });
       } else {
         setNotice({ type: 'SUCCESS', message: 'Successfully updated.' });
       }
@@ -114,17 +114,20 @@ const AccountPage = (user: UserType) => {
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { token } = cookies(context);
-  const res = context.res;
   const req = context.req;
 
   if (!token) {
-    res?.writeHead(302, { Location: `/login` });
-    res?.end();
+    return {
+      redirect: {
+        destination: '/login',
+        statusCode: 302,
+      },
+    };
   }
 
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
-  req && req.headers && req.headers.cookie && headers.append('Cookie', req.headers.cookie);
+  req?.headers.cookie && headers.append('Cookie', req.headers.cookie);
 
   try {
     const data = await getAccount(headers);

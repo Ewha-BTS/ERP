@@ -2,14 +2,14 @@ import { faLightbulb, faUser } from '@fortawesome/free-regular-svg-icons';
 import { faColumns, faEdit, faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { UserStateContext } from '../../context/UserContext';
-import { loadModelData } from '../../lib/api/useGets';
-import { uploadData } from '../../lib/api/usePosts';
-import savePlot from '../../lib/api/usePosts/savePlot';
+import { MODELURL } from '../../lib/api';
+import { loadModelData } from '../../lib/api/get';
+import { uploadData } from '../../lib/api/post';
+import savePlot from '../../lib/api/post/savePlot';
 import { modelDataState, selectedPlotState, userIdState } from '../../lib/state';
 
 const TabBarWrapper = styled.div`
@@ -78,16 +78,14 @@ const InputWrapper = styled.input`
 `;
 
 const TabBar = () => {
-  const state = useContext(UserStateContext);
   const router = useRouter();
   const [fileId, setFileId] = useState<string | null>(null);
   const [modelData, setModelData] = useRecoilState(modelDataState);
   const selectedPlot = useRecoilValue(selectedPlotState);
   const userId = useRecoilValue(userIdState);
-  const isAuth = state.isAuth;
 
   const handleClickDashboard = () => {
-    isAuth ? router.push('/pages') : router.push('/');
+    userId ? router.push('/pages') : router.push('/');
   };
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +101,14 @@ const TabBar = () => {
         setModelData(generatedData.plots);
       }
     }
-    e.target.files = null;
+    e.target.value = '';
+  };
+
+  const handleClick = async () => {
+    const examples = await fetch(`${MODELURL}/inference_example`, {
+      method: 'GET',
+    }).then((res) => res.json());
+    setModelData(examples.plots);
   };
 
   const handlePlotSave = async () => {
@@ -116,8 +121,8 @@ const TabBar = () => {
         <IconWrapper icon={faColumns} onClick={handleClickDashboard} />
         <IconWrapper icon={faEdit} />
         <IconWrapper icon={faLightbulb} onClick={() => router.push('/recommend')} />
-        {!isAuth && <IconWrapper icon={faSignInAlt} onClick={() => router.push('/login')} />}
-        {isAuth && (
+        {!userId && <IconWrapper icon={faSignInAlt} onClick={() => router.push('/login')} />}
+        {userId && (
           <>
             <IconWrapper icon={faUser} onClick={() => router.push('/account')} />
             <IconWrapper icon={faSignOutAlt} onClick={() => router.push('/logout')} />
@@ -136,7 +141,7 @@ const TabBar = () => {
         <>
           <Divider />
           <ButtonBarWrapper>
-            <ButtonWrapper onClick={() => router.push('/pages')}>SAVE</ButtonWrapper>
+            <ButtonWrapper onClick={handleClick}>EXAMPLE</ButtonWrapper>
             <ButtonWrapper onClick={() => router.back()}>Go Back</ButtonWrapper>
           </ButtonBarWrapper>
         </>
@@ -145,13 +150,12 @@ const TabBar = () => {
         <>
           <Divider />
           <ButtonBarWrapper>
-            <form>
-              <LabelWrapper>
-                LOAD
-                <InputWrapper type='file' name='file' onChange={handleChange} />
-              </LabelWrapper>
-            </form>
-            {selectedPlot && <ButtonWrapper onClick={handlePlotSave}>SAVE</ButtonWrapper>}
+            {/* <LabelWrapper>
+              LOAD
+              <InputWrapper type='file' name='file' onChange={handleChange} />
+            </LabelWrapper> */}
+            <ButtonWrapper onClick={handleClick}>EXAMPLE</ButtonWrapper>
+            <ButtonWrapper onClick={handlePlotSave}>SAVE</ButtonWrapper>
           </ButtonBarWrapper>
         </>
       )}

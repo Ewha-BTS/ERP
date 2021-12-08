@@ -1,13 +1,11 @@
 import { NextPageContext } from 'next';
 import cookies from 'next-cookies';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import Button from '../components/common/Button';
 import Card from '../components/common/Card';
 import Notice from '../components/common/Notice';
-import { deletePage } from '../lib/api/useDeletes';
-import { getPage, getPages } from '../lib/api/useGets';
+import { getPage, getPages } from '../lib/api/get';
 import { PageType, DataType } from '../lib/type';
 
 const PagesWrapper = styled.section`
@@ -24,7 +22,7 @@ interface PagesPageProps {
 }
 
 const PagesPage = ({ pages }: PagesPageProps) => {
-  const [cards, setCards] = useState<PageType[]>(pages ? pages.map((data) => data.page) : []);
+  const [cards] = useState<PageType[]>(pages ? pages.map((data) => data.page) : []);
 
   return (
     <PagesWrapper>
@@ -47,17 +45,20 @@ const PagesPage = ({ pages }: PagesPageProps) => {
 
 export const getServerSideProps = async (context: NextPageContext) => {
   const { token } = cookies(context);
-  const res = context.res;
   const req = context.req;
 
   if (!token) {
-    res?.writeHead(302, { Location: `/login` });
-    res?.end();
+    return {
+      redirect: {
+        destination: '/login',
+        statusCode: 302,
+      },
+    };
   }
 
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
-  req && req.headers && req.headers.cookie && headers.append('Cookie', req.headers.cookie);
+  req?.headers.cookie && headers.append('Cookie', req.headers.cookie);
 
   try {
     const data = await getPages(headers);

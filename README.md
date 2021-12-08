@@ -1,6 +1,6 @@
-# ERP: Customizing Recommended Data Visualization Plots
+# ERP: EDA를 위한 데이터 시각화 추천 시스템
 
-[ERP 배포 사이트](https://ewhabts-erp.herokuapp.com/) **_( will be updated soon! plz wait for our new release version 🙌 )_**
+[ERP 배포 사이트](http://35.224.89.32:3000) **_( due to the restricted server resource, plz contact me if you want to explore my service :) )_**
 
 <hr style="height: auto; width: 50%; border-bottom: 5px solid; color: darkgreen; margin: 0 auto" />
 
@@ -26,11 +26,11 @@ Visualization recommender systems automatically generate chart results which pre
 이화여자대학교 엘텍공과대학 소프트웨어학부 컴퓨터공학과 7팀 이화BTS
 
 - 김연수 : Ewha w.univ.
-    - [Github](https://github.com/yskim0)
-    - 백엔드, 모델
+  - [Github](https://github.com/yskim0)
+  - 백엔드, 모델
 - 나정현 : Ewha w.univ.
-    - [Github](https://github.com/leahincom)
-    - 프론트엔드, 백엔드(Node.js)
+  - [Github](https://github.com/leahincom)
+  - 프론트엔드, 백엔드(Node.js)
 
 <br />
 
@@ -38,9 +38,29 @@ Visualization recommender systems automatically generate chart results which pre
 
 ## Demo
 
-Check out our short demo (incomplete version)
+Check out our short demo/ 시연 영상은 아래를 참고해주세요.
 
-[demo video](https://drive.google.com/file/d/1E8cRhCc5dGucIpP8IsikyidfsE1v54Ja/view?usp=sharing)
+[demo video](https://www.youtube.com/watch?v=uQ1P4H62fBk&t=1s)
+
+<br />
+
+
+
+## Features
+
+#### Recommendation Dashboard
+
+<img width="1111" alt="스크린샷 2021-11-17 오후 2 25 34" src="https://user-images.githubusercontent.com/48315997/142140112-711db5db-b338-42cd-afe6-c91efc8d1692.png">
+
+1. dataset 로드 (샘플 데이터셋/ Your Dataset)
+
+   > 현재 EXAMPLE 데이터셋만 제공 중입니다.
+
+2. (추천시스템 모델을 통해 나온) Top-k개 chart recommendation plots 사이드바에 로드
+
+3. 사용자가 chart 선택 시 대시보드에 확대되어 그려짐
+
+4. chart 저장, vega-lite editor 사용 등의 옵션 제공
 
 <br />
 
@@ -48,48 +68,122 @@ Check out our short demo (incomplete version)
 
 #### Main Dashboard
 
-<img width="500" alt="스크린샷 2021-11-17 오후 2 24 14" src="https://user-images.githubusercontent.com/48315997/142139982-22f84b75-371e-4fc5-b4c7-305ba5086156.png">
+<img width="1265" alt="Screenshot 2021-12-08 at 17 11 56" src="https://user-images.githubusercontent.com/49134038/145172314-7ba2d866-85e7-4886-9a17-16428947a285.png">
 
-
-
-> - 저장된 chart 리스트를 왼쪽에 보여주기
->
-> - 사용자가 임의로 chart를 drag-n-drop 하여 레이아웃 배치
-> - 마크다운 문법의 텍스트 수정 가능
-
+- 슬래시 커맨드를 통해 html 태그 이용 가능
+- 기존에 로드했던 데이터셋 리스트 사이드바에 로딩
+- 데이터셋 별로 저장된 chart 리스트 사이드바에 로드
+- chart 선택 후 슬래시 커맨드를 통해 `plot` 입력 시 대시보드에 해당 플랏 끼워넣음
 
 <br />
 
 
 
+### Sign Up Page
 
+<img width="1266" alt="Screenshot 2021-12-08 at 17 04 34" src="https://user-images.githubusercontent.com/49134038/145171427-f7f9c419-683b-4f6d-b82a-26a0af962d3a.png">
 
-#### Recommendation Dashboard
-
-<img width="1111" alt="스크린샷 2021-11-17 오후 2 25 34" src="https://user-images.githubusercontent.com/48315997/142140112-711db5db-b338-42cd-afe6-c91efc8d1692.png">
-
-
-> 1. dataset 넣기(샘플데이터셋/Your Dataset)
-> 2. 적절한 chart recommendation Top-k개 리스트업 해서 오른쪽에 띄우기
-> 3. 사용자가 chart 선택
-> 4. chart 저장
-
-<br />
-
-
-#### My Page
-
-<img width="1264" alt="마이페이지" src="https://user-images.githubusercontent.com/49134038/142229755-5fb2f296-0a52-4251-b172-7a69bd702a02.png">
-
-
-> 1. 로그인 시 마이페이지 이동 로고 생성
-> 2. 마이페이지에서 계정 정보 업데이트 가능
+- 이메일/ 비밀번호 형식에 맞는 계정 등록 가능
+- `express-validator` 를 이용한 에러 핸들링
 
 <br />
 
 
 
-## Front Library (package.json)
+#### Login Page
+
+<img width="1266" alt="Screenshot 2021-12-08 at 17 04 20" src="https://user-images.githubusercontent.com/49134038/145171441-7aee8967-5e34-44d5-bc6b-f03c5e11810b.png">
+
+- 로그인 시 사용자 정보 로드
+
+- 비밀번호 찾기 기능
+
+<br />
+
+
+
+### My Page
+
+<img width="1264" alt="마이페이지" src="https://user-images.githubusercontent.com/49134038/142229755-5fb2f296-0a52-4251-b172-7a69bd702a02.png">
+
+- 계정 정보 업데이트
+
+
+
+## Getting Started (local)
+
+### Frontend
+
+1. Clone this repo
+
+```
+git clone https://github.com/Ewha-BTS/ERP.git
+```
+
+2. Change folder directory
+
+```
+cd erp-client
+```
+
+3. Install project packages
+
+```
+npm i
+```
+
+4. Run (dev mode)
+
+```
+npm run dev
+```
+
+### 실행 방법 (local)
+
+1. 이 저장소를 로컬 저장소에 클론한다.
+
+`git clone https://github.com/Ewha-BTS/ERP.git`
+
+2. requirements를 설치한다.
+
+> 아나콘다 가상 환경에서 진행하는 것을 추천합니다.
+
+* `cd ERP` ; 첫 번째 step에서 저장했던 폴더로 이동한다.
+
+- `pip install -r requirements.txt`
+
+3. `python server.py` or `python3 server.py` ; </br> 
+############이 부분 노드 서버 실행 명령어 ############
+서버를 실행한다.
+
+- 실행 전 유의 사항
+    - 학습한 모델은 깃허브 용량 초과(100MB 초과)로 인해 업로드하지 못하였습니다.
+    - **아래 링크를 통해 모델을 다운로드하여 `/vizmodel` 폴더에 이동한 후 실행하셔야 정상적으로 작동합니다.** 
+    - model이 없으면 작동하지 않습니다!!
+    - https://drive.google.com/file/d/1mXan201jbXrmwkP1144P95vf9lMuh_v7/view?usp=sharing
+
+
+4. 클라이언트를 실행한다.
+
+* `cd erp-client` ; 클라이언트 폴더로 이동한다.
+
+* `npm start`
+
+
+<br>
+
+
+
+## Tech Stack and Library
+
+#### Front-end
+
+- React.js
+- Next.js
+- TypeScript
+- Recoil
+- styled-components
+
 ```
 "@fortawesome/fontawesome-svg-core": "^1.2.36",
 "@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -113,6 +207,23 @@ Check out our short demo (incomplete version)
 "vega": "^5.21.0",
 "vega-lite": "^5.1.1"
 ```
+
+<br />
+
+
+
+#### Back-end
+
+* node.js
+* Python
+* Flask
+* MongoDB
+* Tensorflow
+
+
+<br />
+
+
 
 
 ## Requirements
@@ -179,64 +290,7 @@ zipp
 
 
 
-## 실행 방법 (local)
+## License
 
-1. 이 저장소를 로컬 저장소에 클론한다.
-
-`git clone https://github.com/Ewha-BTS/ERP.git`
-
-2. requirements를 설치한다.
-
-> 아나콘다 가상 환경에서 진행하는 것을 추천합니다.
-
-* `cd ERP` ; 첫 번째 step에서 저장했던 폴더로 이동한다.
-
-- `pip install -r requirements.txt`
-
-3. `python server.py` or `python3 server.py` ; </br> 
-############이 부분 노드 서버 실행 명령어 ############
-서버를 실행한다.
-
-- 실행 전 유의 사항
-    - 학습한 모델은 깃허브 용량 초과(100MB 초과)로 인해 업로드하지 못하였습니다.
-    - **아래 링크를 통해 모델을 다운로드하여 `/vizmodel` 폴더에 이동한 후 실행하셔야 정상적으로 작동합니다.** 
-    - model이 없으면 작동하지 않습니다!!
-    - https://drive.google.com/file/d/1mXan201jbXrmwkP1144P95vf9lMuh_v7/view?usp=sharing
-
-
-4. 클라이언트를 실행한다.
-
-* `cd erp-client` ; 클라이언트 폴더로 이동한다.
-
-* `npm start`
-
-
-<br>
-
-
-
-## Tech Stack
-
-#### Front-end
-
-- React.js
-- Recoil
-- styled-components (SASS 기반)
-
-<br />
-
-
-
-#### Back-end
-
-* node.js
-* Python
-* Flask
-* MongoDB
-* Tensorflow
-
-
-<br />
-
-
+Distributed under the MIT License. See `LICENSE` for more information.
 

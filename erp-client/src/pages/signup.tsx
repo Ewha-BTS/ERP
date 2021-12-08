@@ -1,13 +1,14 @@
 import { NextPageContext } from 'next';
 import cookies from 'next-cookies';
 import { useRouter } from 'next/router';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Input from '../components/common/Input';
 import Notice from '../components/common/Notice';
-import { UserDispatchContext } from '../context/UserContext';
-import { createAccount } from '../lib/api/usePosts';
+import { createAccount } from '../lib/api/post';
+import { userIdState } from '../lib/state';
 import { FormType } from '../lib/type';
 
 const SignupWrapper = styled.section`
@@ -52,12 +53,11 @@ const form = {
 };
 
 const SinupPage = () => {
+  const router = useRouter();
   const RESET_NOTICE = { type: '', message: '' };
   const [notice, setNotice] = useState(RESET_NOTICE);
-  const dispatch = useContext(UserDispatchContext);
-  const router = useRouter();
-
   const [formData, setFormData] = useState<FormType>({ name: '', email: '', password: '' });
+  const setUserId = useSetRecoilState(userIdState);
 
   const handleInputChange = (id: string, value: string) => {
     setFormData({ ...formData, [id]: value });
@@ -68,25 +68,25 @@ const SinupPage = () => {
     setNotice(RESET_NOTICE);
 
     try {
-      const data = await createAccount(formData);
-      if (data.errCode) {
-        setNotice({ type: 'ERROR', message: data.message });
+      const user = await createAccount(formData);
+      if (user.errCode) {
+        setNotice({ type: 'ERROR', message: user.message });
+        setUserId(null);
       } else {
-        dispatch({ type: 'LOGIN' });
+        setUserId(user.userId);
         setNotice({
           type: 'SUCCESS',
-          message: 'Success! Check your inbox to confirm your email. You will now be redirected.',
+          message: 'Success! Login to start the journey :)',
         });
-        setTimeout(() => {
-          router.push('/pages');
-        }, 4000);
+        router.push('/pages');
       }
     } catch (err) {
       console.log(err);
       setNotice({ type: 'ERROR', message: 'Something unexpected happened.' });
-      dispatch({ type: 'LOGOUT' });
+      setUserId(null);
     }
   };
+
   return (
     <SignupWrapper>
       <HeadingWrapper>Signup</HeadingWrapper>
@@ -119,10 +119,14 @@ const SinupPage = () => {
 
 export const getServerSideProps = (context: NextPageContext) => {
   const { token } = cookies(context);
-  const res = context.res;
+
   if (token) {
-    res?.writeHead(302, { Location: `/account` });
-    res?.end();
+    return {
+      redirect: {
+        destination: '/account',
+        statusCode: 302,
+      },
+    };
   }
 
   return { props: {} };

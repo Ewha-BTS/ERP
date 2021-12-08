@@ -152,8 +152,8 @@ npm run dev
 
 - `pip install -r requirements.txt`
 
-3. `python server.py` or `python3 server.py` ; </br> 
-############이 부분 노드 서버 실행 명령어 ############
+3. cd `erp-server` and run `python server.py` ; </br> 
+cd `erp-server-nodejs` and run `npm start`
 서버를 실행한다.
 
 - 실행 전 유의 사항
@@ -225,8 +225,7 @@ npm run dev
 
 
 
-
-## Requirements
+#### Requirements(Model)
 
 ```
 astor==0.8.1

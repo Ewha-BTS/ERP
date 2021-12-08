@@ -224,6 +224,14 @@ def inference(file_id):
             return jsonify({'message' : 'Fail(Inference failed)'}), 500
     return jsonify({'message':'Fail(no file detected)'}), 400
 
+@app.route('/inference_example')
+def inference_example():
+    file = mongo.db.data.find_one({"_id" : ObjectId('6186ba66ecb1fd45bdee6ec8')}) # db 찾음
+    if file:
+        generated_plots = file['generated_plots']
+        return jsonify({'message': 'Success(example recommended plots)', 'plots':generated_plots}), 200
+
+    return jsonify({'message':'Fail(no file detected)'}), 400
 
 @app.route('/save', methods=['POST'])
 def save():

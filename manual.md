@@ -14,6 +14,7 @@
 
 2. 테스트용 계정으로 로그인을 진행한다.
 
+   > [로그인 페이지](http://35.224.89.32:3000/login)
    > ID: test@erp.com
    > PWD: testewhabts!
 
@@ -21,7 +22,7 @@
 
    ![image](https://user-images.githubusercontent.com/48315997/145206674-682f2e52-933c-41cd-8c2c-c02cc6d617c6.png)
 
-   example dataset을 가지고 플랏들을 생성한다.
+   example dataset을 가지고 플랏들을 생성한다. 
 
    ![image](https://user-images.githubusercontent.com/48315997/145206889-fbd0f7a9-5f00-4762-bcc8-0b6e3c98595d.png)
 
